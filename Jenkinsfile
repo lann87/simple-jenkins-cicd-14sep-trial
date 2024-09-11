@@ -1,30 +1,42 @@
 pipeline {
-    agent any 
-
+    agent any
+    
     stages {
         stage('Build') {
             steps {
-                echo '🚀 Starting the build process...'
-                sh 'docker build -t my-app .' // Build the Docker image
-                echo '✔️ Build completed successfully!'
+                echo 'Building the application...'
+                // Add your build commands here, for example:
+                // sh 'npm install'
+                // sh 'mvn clean package'
             }
         }
+        
         stage('Test') {
             steps {
-                echo '🧪 Running tests...'
-                sh 'docker run --rm my-app:latest tests' // Run tests inside a Docker container
-                echo '✅ All tests passed!'
-                echo '🔍 Reviewing test results...'
+                echo 'Running tests...'
+                // Add your test commands here, for example:
+                // sh 'npm test'
+                // sh 'mvn test'
             }
         }
+        
         stage('Deploy') {
             steps {
-                echo '🚢 Preparing for deployment...'
-                sh 'docker push my-app:latest' // Push the Docker image to a registry
-                echo '🌐 Deployment in progress...'
-                // Add your deployment commands here (e.g., deploying to a server)
-                echo '🎉 Deployment finished successfully!'
+                echo 'Deploying the application...'
+                // Add your deployment commands here, for example:
+                // sh 'docker build -t myapp .'
+                // sh 'docker push myapp:latest'
+                // sh 'kubectl apply -f kubernetes-manifests/'
             }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline succeeded! The application has been built, tested, and deployed.'
+        }
+        failure {
+            echo 'Pipeline failed. Please check the logs for details.'
         }
     }
 }
